@@ -1,8 +1,9 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Project } from '../App';
 
 declare const gsap: any;
+declare const ScrollTrigger: any;
 
 interface PortfolioGalleryProps {
   onProjectClick: (project: Project) => void;
@@ -11,6 +12,7 @@ interface PortfolioGalleryProps {
 
 const PortfolioGallery: React.FC<PortfolioGalleryProps> = ({ onProjectClick, onBack }) => {
   const [imagesLoaded, setImagesLoaded] = useState<Record<number, boolean>>({});
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const allProjects: Project[] = [
     { 
@@ -53,8 +55,37 @@ const PortfolioGallery: React.FC<PortfolioGalleryProps> = ({ onProjectClick, onB
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    const tl = gsap.timeline();
-    tl.fromTo('.gallery-reveal', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 1, stagger: 0.1, ease: "power4.out" });
+    
+    // Ensure plugins are registered
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+      gsap.registerPlugin(ScrollTrigger);
+    }
+
+    const ctx = gsap.context(() => {
+      // Entry Animation
+      const tl = gsap.timeline();
+      tl.fromTo('.gallery-reveal', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 1, stagger: 0.1, ease: "power4.out" });
+
+      // Parallax Animation
+      const parallaxWrappers = document.querySelectorAll('.gallery-parallax-wrapper');
+      parallaxWrappers.forEach((wrapper) => {
+        gsap.fromTo(wrapper, 
+          { yPercent: -15 }, 
+          {
+            yPercent: 15,
+            ease: "none",
+            scrollTrigger: {
+              trigger: wrapper.parentElement,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: true
+            }
+          }
+        );
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
   }, []);
 
   const handleImageLoad = (index: number) => {
@@ -62,7 +93,7 @@ const PortfolioGallery: React.FC<PortfolioGalleryProps> = ({ onProjectClick, onB
   };
 
   return (
-    <div className="min-h-screen bg-[#050505] pb-24">
+    <div ref={containerRef} className="min-h-screen bg-[#050505] pb-24">
       {/* Navigation Header */}
       <nav className="fixed top-0 left-0 w-full z-50 p-6">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
@@ -100,23 +131,35 @@ const PortfolioGallery: React.FC<PortfolioGalleryProps> = ({ onProjectClick, onB
           >
             <div className="aspect-square overflow-hidden rounded-[2.5rem] mb-6 relative border border-white/5 bg-[#0a0a0a]">
               
+              {/* Parallax Wrapper */}
+              <div className="gallery-parallax-wrapper absolute inset-0 w-full h-[130%] -top-[15%]">
+                <img 
+                  src={p.img} 
+                  alt={p.title} 
+                  onLoad={() => handleImageLoad(i)}
+                  className={`w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ${imagesLoaded[i] ? 'opacity-60 group-hover:opacity-100' : 'opacity-0'}`}
+                />
+              </div>
+
               {/* Shimmer Placeholder */}
               {!imagesLoaded[i] && (
                 <div className="absolute inset-0 z-10 shimmer rounded-[2.5rem]" />
               )}
-
-              <img 
-                src={p.img} 
-                alt={p.title} 
-                onLoad={() => handleImageLoad(i)}
-                className={`w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ${imagesLoaded[i] ? 'opacity-60 group-hover:opacity-100' : 'opacity-0'}`}
-              />
               
-              <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity"></div>
+              {/* Overlay Gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity pointer-events-none"></div>
               
-              <div className={`absolute bottom-8 left-8 right-8 transition-opacity duration-500 ${imagesLoaded[i] ? 'opacity-100' : 'opacity-0'}`}>
+              {/* Content */}
+              <div className={`absolute bottom-8 left-8 right-8 transition-opacity duration-500 z-20 ${imagesLoaded[i] ? 'opacity-100' : 'opacity-0'}`}>
                 <span className="text-[10px] uppercase font-bold tracking-[0.3em] text-white/50 mb-2 block">{p.category}</span>
-                <h3 className="text-3xl font-display font-bold group-hover:translate-x-2 transition-transform">{p.title}</h3>
+                <h3 className="text-3xl font-display font-bold group-hover:translate-x-2 transition-transform mb-4">{p.title}</h3>
+                
+                {/* Saiba Mais Button */}
+                <div className="flex items-center gap-2">
+                   <span className="inline-flex items-center justify-center px-5 py-2 rounded-full border border-white/20 bg-white/5 backdrop-blur-md text-[10px] font-bold uppercase tracking-widest text-white group-hover:bg-white group-hover:text-black transition-all duration-300 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100">
+                     Saiba mais
+                   </span>
+                </div>
               </div>
 
               {/* Skeleton text for title when loading */}

@@ -40,16 +40,24 @@ const BentoGrid: React.FC = () => {
           </div>
         </div>
 
-        {/* Item 3 - Square */}
-        <div className="md:col-span-1 md:row-span-1 bento-item rounded-[2.5rem] p-8 flex flex-col justify-center">
-          <h3 className="text-xl font-display font-bold mb-3">SEO Técnico</h3>
-          <p className="text-slate-500 text-sm">Arquitetura de dados planejada para o topo do Google.</p>
-        </div>
-
-        {/* Item 4 - Wide Bottom */}
-        <div className="md:col-span-1 md:row-span-1 bg-white text-black rounded-[2.5rem] p-8 flex flex-col justify-between group hover:bg-slate-100 transition-colors">
-          <h3 className="text-xl font-display font-bold leading-tight">UX <br />Premium</h3>
-          <svg className="self-end opacity-40 group-hover:translate-x-1 transition-transform" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        {/* Item 3 - Entrega em 48h (Substituindo SEO e UX) */}
+        <div className="md:col-span-1 md:row-span-2 bg-white text-black rounded-[2.5rem] p-8 flex flex-col justify-between group hover:bg-slate-100 transition-colors relative overflow-hidden">
+           <div className="absolute top-[-20%] right-[-20%] w-40 h-40 bg-indigo-500/20 blur-[50px] rounded-full"></div>
+           
+           <div>
+             <div className="w-14 h-14 bg-zinc-100 rounded-2xl flex items-center justify-center mb-6 text-indigo-600 group-hover:scale-110 transition-transform duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+             </div>
+             <h3 className="text-3xl font-display font-bold leading-[1.1] mb-4">Entrega em <br/>até 48h</h3>
+             <p className="text-zinc-600 text-sm leading-relaxed font-medium">
+               Agilidade extrema para quem não tem tempo a perder. Do briefing ao lançamento em tempo recorde.
+             </p>
+           </div>
+           
+           <div className="flex items-center gap-2">
+             <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+             <span className="text-xs font-bold uppercase tracking-widest text-zinc-400">Disponível Agora</span>
+           </div>
         </div>
       </div>
     </div>

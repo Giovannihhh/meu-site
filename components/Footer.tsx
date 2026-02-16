@@ -5,15 +5,7 @@ const Footer: React.FC = () => {
   return (
     <footer className="py-20 border-t border-white/5">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-12 mb-20">
-          <div className="flex items-center">
-            <img 
-              src="logo.png" 
-              alt="43V3R Logo" 
-              className="h-12 md:h-16 w-auto object-contain"
-            />
-          </div>
-          
+        <div className="flex flex-col md:flex-row justify-center items-center gap-12 mb-20">
           <div className="flex flex-wrap justify-center gap-8 text-sm text-zinc-500 uppercase font-bold tracking-widest">
             <a href="#" className="hover:text-white transition-colors">Instagram</a>
             <a href="#" className="hover:text-white transition-colors">LinkedIn</a>

@@ -3,30 +3,75 @@ import React from 'react';
 
 const Services: React.FC = () => {
   const services = [
-    { title: "Landing Pages de Alta Conversão", desc: "Estruturas otimizadas para transformar tráfego em vendas de forma eficiente." },
-    { title: "Plataformas E-commerce", desc: "Lojas virtuais robustas com foco na experiência do usuário e checkout simplificado." },
-    { title: "Desenvolvimento Web Sob Medida", desc: "Aplicações escaláveis criadas para resolver problemas específicos do seu fluxo de trabalho." },
-    { title: "Brand Identity Digital", desc: "Design visual coerente que transmite a autoridade e os valores da sua marca." }
+    { 
+      title: "Landing Pages de Alta Conversão", 
+      desc: "Estruturas otimizadas para transformar tráfego em vendas de forma eficiente.",
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      )
+    },
+    { 
+      title: "E-commerce & Plataformas", 
+      desc: "Lojas virtuais robustas com foco na experiência do usuário e checkout simplificado.",
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      )
+    },
+    { 
+      title: "Desenvolvimento Sob Medida", 
+      desc: "Aplicações escaláveis criadas para resolver problemas específicos do seu fluxo de trabalho.",
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      )
+    },
+    { 
+      title: "Brand Identity Digital", 
+      desc: "Design visual coerente que transmite a autoridade e os valores da sua marca.",
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/><path d="M12 6v6l4 2"/></svg>
+      )
+    }
   ];
 
   return (
-    <section className="py-40 bg-[#080809] border-y border-white/5 reveal">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-24 gap-8">
+    <section className="py-32 bg-[#050505] reveal relative overflow-hidden">
+      {/* Background Decor */}
+      <div className="absolute top-[20%] right-0 w-[600px] h-[600px] bg-indigo-900/5 blur-[120px] rounded-full pointer-events-none"></div>
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <div className="mb-24 md:flex justify-between items-end">
           <div className="max-w-2xl">
-            <h2 className="text-5xl md:text-7xl font-display font-bold mb-8 leading-[1.1] tracking-tight">Soluções que <br /> <span className="font-serif italic text-slate-500 font-light">impulsionam</span> marcas.</h2>
+            <span className="text-indigo-400 font-bold text-xs uppercase tracking-[0.2em] mb-4 block">Nossas Competências</span>
+            <h2 className="text-4xl md:text-6xl font-display font-bold leading-[1.1] tracking-tight text-white">
+              Soluções digitais <br />
+              <span className="text-zinc-600">para o futuro.</span>
+            </h2>
           </div>
+          <p className="text-zinc-400 text-lg font-light max-w-md mt-6 md:mt-0 leading-relaxed md:text-right">
+            Da concepção à execução, entregamos produtos digitais que definem categorias e elevam padrões de mercado.
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {services.map((s, i) => (
-            <div key={i} className="group glass p-12 rounded-[2.5rem] hover:bg-white/5 transition-all duration-500 cursor-default border-white/5">
-              <div className="flex items-center gap-4 mb-8">
-                <span className="text-slate-700 font-display text-lg font-bold">/0{i+1}</span>
-                <div className="h-px flex-1 bg-white/10"></div>
-              </div>
-              <h3 className="text-3xl font-display font-bold mb-6 group-hover:translate-x-2 transition-transform duration-700 ease-out">{s.title}</h3>
-              <p className="text-slate-400 text-lg leading-relaxed max-w-md font-light">{s.desc}</p>
+            <div key={i} className="group relative p-[1px] rounded-[2rem] bg-gradient-to-b from-white/10 to-transparent hover:from-indigo-500/50 hover:to-purple-500/50 transition-all duration-500">
+               <div className="relative bg-[#0A0A0B] h-full rounded-[2rem] p-10 flex flex-col items-start overflow-hidden">
+                  
+                  {/* Hover Glow Effect inside card */}
+                  <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 blur-[80px] rounded-full translate-x-full -translate-y-full group-hover:translate-x-1/2 group-hover:-translate-y-1/2 transition-transform duration-700 ease-in-out pointer-events-none"></div>
+
+                  <div className="w-14 h-14 rounded-2xl bg-zinc-900/50 border border-white/5 flex items-center justify-center text-zinc-400 mb-8 group-hover:bg-indigo-600 group-hover:text-white group-hover:border-indigo-500 transition-all duration-300 shadow-lg relative z-10">
+                    {s.icon}
+                  </div>
+                  
+                  <h3 className="text-2xl font-display font-bold mb-4 text-white group-hover:text-indigo-100 transition-colors relative z-10">{s.title}</h3>
+                  <p className="text-zinc-500 leading-relaxed font-light mb-8 group-hover:text-zinc-400 transition-colors relative z-10">{s.desc}</p>
+                  
+                  <div className="mt-auto flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-600 group-hover:text-indigo-400 transition-colors relative z-10">
+                    <span>Detalhes</span>
+                    <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                  </div>
+               </div>
             </div>
           ))}
         </div>

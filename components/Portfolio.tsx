@@ -91,8 +91,8 @@ const Portfolio: React.FC<PortfolioProps> = ({ onProjectClick, onSeeAll }) => {
                   className="project-img-parallax w-full h-[120%] object-cover group-hover:scale-110 transition-all duration-1000 ease-out absolute -top-[10%] brightness-90 group-hover:brightness-100"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-40 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-8">
-                  <span className="bg-white text-black px-6 py-2.5 rounded-full text-xs font-bold transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 shadow-xl">
-                    Ver Projeto
+                  <span className="bg-white text-black px-6 py-2.5 rounded-full text-xs font-bold transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 shadow-xl flex items-center gap-2">
+                    Saiba mais <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                   </span>
                 </div>
               </div>

@@ -7,9 +7,10 @@ declare const gsap: any;
 interface ProjectPageProps {
   project: Project;
   onBack: () => void;
+  onStartProject: () => void;
 }
 
-const ProjectPage: React.FC<ProjectPageProps> = ({ project, onBack }) => {
+const ProjectPage: React.FC<ProjectPageProps> = ({ project, onBack, onStartProject }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
     const tl = gsap.timeline();
@@ -112,7 +113,10 @@ const ProjectPage: React.FC<ProjectPageProps> = ({ project, onBack }) => {
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h2 className="text-4xl md:text-6xl font-display font-bold mb-12 text-white">Gostou deste resultado?</h2>
           <p className="text-slate-400 mb-12 text-lg">Podemos criar algo igualmente impactante para sua empresa em menos de uma semana.</p>
-          <button className="bg-white text-black px-12 py-5 rounded-full font-bold text-lg hover:scale-105 transition-transform active:scale-95 shadow-2xl shadow-white/10">
+          <button 
+            onClick={onStartProject}
+            className="bg-white text-black px-12 py-5 rounded-full font-bold text-lg hover:scale-105 transition-transform active:scale-95 shadow-2xl shadow-white/10"
+          >
             Solicitar orçamento agora
           </button>
         </div>

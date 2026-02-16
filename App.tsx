@@ -6,10 +6,10 @@ import Marquee from './components/Marquee';
 import BentoGrid from './components/BentoGrid';
 import Services from './components/Services';
 import Portfolio from './components/Portfolio';
-import Testimonials from './components/Testimonials';
 import Footer from './components/Footer';
 import ProjectPage from './components/ProjectPage';
 import PortfolioGallery from './components/PortfolioGallery';
+import CustomizationWizard from './components/CustomizationWizard';
 
 // Register GSAP plugins
 declare const gsap: any;
@@ -23,7 +23,7 @@ export interface Project {
 }
 
 const App: React.FC = () => {
-  const [view, setView] = useState<'home' | 'gallery' | 'project'>('home');
+  const [view, setView] = useState<'home' | 'gallery' | 'project' | 'customization'>('home');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   useEffect(() => {
@@ -48,6 +48,7 @@ const App: React.FC = () => {
         );
       });
     } else {
+       // Reset scroll position for new views
        window.scrollTo(0, 0);
     }
   }, [view]);
@@ -62,6 +63,11 @@ const App: React.FC = () => {
     setSelectedProject(null);
   };
 
+  const handleStartProject = () => {
+    setView('customization');
+    setSelectedProject(null);
+  }
+
   const handleBackToHome = () => {
     setView('home');
     setSelectedProject(null);
@@ -73,7 +79,7 @@ const App: React.FC = () => {
         <>
           <Header onNavigatePortfolio={handleGoToGallery} />
           <main>
-            <Hero />
+            <Hero onNavigatePortfolio={handleGoToGallery} onStartProject={handleStartProject} />
             <Marquee />
             <section id="diferenciais">
                <BentoGrid />
@@ -83,9 +89,6 @@ const App: React.FC = () => {
             </section>
             <section id="portfolio">
               <Portfolio onProjectClick={handleProjectClick} onSeeAll={handleGoToGallery} />
-            </section>
-            <section id="depoimentos">
-              <Testimonials />
             </section>
           </main>
           <Footer />
@@ -97,7 +100,15 @@ const App: React.FC = () => {
       )}
 
       {view === 'project' && (
-        <ProjectPage project={selectedProject!} onBack={() => setView('gallery')} />
+        <ProjectPage 
+          project={selectedProject!} 
+          onBack={() => setView('gallery')} 
+          onStartProject={handleStartProject}
+        />
+      )}
+
+      {view === 'customization' && (
+        <CustomizationWizard onBack={handleBackToHome} />
       )}
     </div>
   );

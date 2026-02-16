@@ -4,13 +4,22 @@ import React, { useEffect, useRef, useState } from 'react';
 declare const gsap: any;
 declare const ScrollTrigger: any;
 
-const Hero: React.FC = () => {
+interface HeroProps {
+  onNavigatePortfolio: () => void;
+  onStartProject: () => void;
+}
+
+const Hero: React.FC<HeroProps> = ({ onNavigatePortfolio, onStartProject }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+
+  // Estado para o efeito de digitação
+  const [displayedText, setDisplayedText] = useState("");
+  const fullText = "Entregamos autoridade através de sites luxuosos e tecnicamente superiores. Projetados para converter e expandir seu alcance global.";
 
   useEffect(() => {
     // Content Animations
@@ -29,10 +38,25 @@ const Hero: React.FC = () => {
       { y: 0, opacity: 1, duration: 0.8, ease: "expo.out" }, "-=0.6"
     );
 
+    // Lógica do efeito de escrita (Typewriter)
+    const startTyping = setTimeout(() => {
+      let index = 0;
+      const typeInterval = setInterval(() => {
+        if (index <= fullText.length) {
+          setDisplayedText(fullText.slice(0, index));
+          index++;
+        } else {
+          clearInterval(typeInterval);
+        }
+      }, 30); // Velocidade da digitação (ms)
+
+      return () => clearInterval(typeInterval);
+    }, 1000); // Aguarda a animação inicial do título
+
     // Parallax Scroll Effect for Video
     if (videoRef.current) {
       gsap.to(videoRef.current, {
-        yPercent: 15,
+        yPercent: 20, // Moves down relative to container, creating a slower visual scroll speed
         ease: "none",
         scrollTrigger: {
           trigger: containerRef.current,
@@ -58,6 +82,8 @@ const Hero: React.FC = () => {
       };
       playVideo();
     }
+
+    return () => clearTimeout(startTyping);
   }, []);
 
   return (
@@ -74,22 +100,20 @@ const Hero: React.FC = () => {
           )}
           
           <video
-  ref={videoRef}
-  autoPlay
-  muted
-  loop
-  playsInline
-  onLoadedData={() => setIsVideoLoaded(true)}
-  className={`absolute inset-0 w-full h-[130%] object-cover -top-[15%] scale-105 transition-opacity duration-1000 will-change-transform ${
-    isVideoLoaded ? 'opacity-50' : 'opacity-0'
-  }`}
->
-  <source 
-    src="https://raw.githubusercontent.com/intel-iot-devkit/sample-videos/master/bottle-detection.mp4" 
-    type="video/mp4" 
-  />
-  Your browser does not support the video tag.
-</video>
+            ref={videoRef}
+            autoPlay
+            muted
+            loop
+            playsInline
+            onLoadedData={() => setIsVideoLoaded(true)}
+            className={`absolute inset-0 w-full h-[120%] object-cover -top-[10%] transition-opacity duration-1500 ease-in-out will-change-transform ${isVideoLoaded ? 'opacity-40' : 'opacity-0'}`}
+          >
+            <source 
+              src="https://github.com/Giovannihhh/sites/raw/refs/heads/main/130213-748134209.mp4" 
+              type="video/mp4" 
+            />
+            Your browser does not support the video tag.
+          </video>
 
           {/* Premium Overlays */}
           <div className="absolute inset-0 z-[2] bg-gradient-to-b from-[#050505]/60 via-transparent to-[#050505]"></div>
@@ -119,28 +143,39 @@ const Hero: React.FC = () => {
         
         <p 
           ref={subRef} 
-          className="text-zinc-300 text-lg md:text-xl max-w-3xl mx-auto mb-14 leading-relaxed font-light drop-shadow-md"
+          className="text-zinc-300 text-lg md:text-xl max-w-3xl mx-auto mb-14 leading-relaxed font-light drop-shadow-md min-h-[3.5rem]"
         >
-          Entregamos autoridade através de sites luxuosos e tecnicamente superiores. Projetados para converter e expandir seu alcance global.
+          {displayedText}
+          <span className="animate-pulse text-indigo-400 font-bold ml-0.5">|</span>
         </p>
         
         <div ref={ctaRef} className="flex flex-col sm:flex-row items-center justify-center gap-6">
-          <button className="group relative overflow-hidden bg-white text-black px-12 py-5 rounded-full font-bold text-base hover:scale-105 transition-all active:scale-95 shadow-2xl shadow-white/20">
+          <button 
+            onClick={onStartProject}
+            className="group relative overflow-hidden bg-white text-black px-12 py-5 rounded-full font-bold text-base hover:scale-105 transition-all active:scale-95 shadow-2xl shadow-white/20"
+          >
             <span className="relative z-10">Iniciar Projeto</span>
             <div className="absolute inset-0 bg-zinc-200 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
           </button>
           
-          <button className="glass text-white px-12 py-5 rounded-full font-semibold text-base hover:bg-white/10 transition-all border-white/20 bg-white/5 active:scale-95">
-            Portfólio 2026
+          <button 
+            onClick={onNavigatePortfolio}
+            className="glass text-white px-12 py-5 rounded-full font-semibold text-base hover:bg-white/10 transition-all border-white/20 bg-white/5 active:scale-95"
+          >
+            Portfólio
           </button>
         </div>
       </div>
 
-      {/* Scroll Suggestion Indicator */}
-      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 z-20 pointer-events-none group">
-        <span className="text-[9px] font-bold tracking-[0.4em] text-zinc-500 uppercase transition-colors group-hover:text-white">Scroll</span>
-        <div className="w-[1px] h-14 bg-white/10 relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-full bg-indigo-500 animate-scroll-line"></div>
+      {/* Scroll Suggestion Indicator - Minimalist & Mobile Optimized */}
+      <div className="absolute bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-20 pointer-events-none opacity-60">
+        {/* Text Hidden on Mobile to reduce clutter */}
+        <span className="hidden md:block text-[9px] font-bold tracking-[0.3em] text-zinc-400 uppercase">
+          Scroll
+        </span>
+        {/* Sleek Vertical Line with Drop Animation */}
+        <div className="w-[1px] h-10 md:h-16 bg-white/10 relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-white animate-drop"></div>
         </div>
       </div>
       
@@ -154,17 +189,16 @@ const Hero: React.FC = () => {
           0%, 100% { transform: translateY(0); }
           50% { transform: translateY(-10px); }
         }
-        @keyframes scroll-line {
-          0% { transform: scaleY(0); transform-origin: top; opacity: 0; }
-          40% { transform: scaleY(1); transform-origin: top; opacity: 1; }
-          60% { transform: scaleY(1); transform-origin: bottom; opacity: 1; }
-          100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+        @keyframes drop {
+          0% { transform: translateY(-100%); opacity: 0; }
+          50% { opacity: 1; }
+          100% { transform: translateY(100%); opacity: 0; }
         }
         .animate-float {
           animation: float 6s ease-in-out infinite;
         }
-        .animate-scroll-line {
-          animation: scroll-line 2.5s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+        .animate-drop {
+          animation: drop 1.8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
         }
       `}</style>
     </section>
