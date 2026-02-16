@@ -85,7 +85,7 @@ const Hero: React.FC = () => {
   }`}
 >
   <source 
-    src="https://github.com/Giovannihhh/sites/raw/refs/heads/main/52823-471089056_small.mp4" 
+    src="https://raw.githubusercontent.com/Giovannihhh/sites/main/52823-471089056_small.mp4" 
     type="video/mp4" 
   />
   Your browser does not support the video tag.
