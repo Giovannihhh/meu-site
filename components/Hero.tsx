@@ -74,20 +74,22 @@ const Hero: React.FC = () => {
           )}
           
           <video
-            ref={videoRef}
-            autoPlay
-            muted
-            loop
-            playsInline
-            onLoadedData={() => setIsVideoLoaded(true)}
-            className={`absolute inset-0 w-full h-[130%] object-cover -top-[15%] scale-105 transition-opacity duration-1500 ease-in-out ${isVideoLoaded ? 'opacity-40' : 'opacity-0'}`}
-          >
-            <source 
-              src="https://github.com/Giovannihhh/sites/raw/refs/heads/main/52823-471089056_small.mp4" 
-              type="video/mp4" 
-            />
-            Your browser does not support the video tag.
-          </video>
+  ref={videoRef}
+  autoPlay
+  muted
+  loop
+  playsInline
+  onLoadedData={() => setIsVideoLoaded(true)}
+  className={`absolute inset-0 w-full h-[130%] object-cover -top-[15%] scale-105 transition-opacity duration-1000 will-change-transform ${
+    isVideoLoaded ? 'opacity-50' : 'opacity-0'
+  }`}
+>
+  <source 
+    src="https://raw.githubusercontent.com/Giovannihhh/sites/main/52823-471089056_small.mp4" 
+    type="video/mp4" 
+  />
+  Your browser does not support the video tag.
+</video>
 
           {/* Premium Overlays */}
           <div className="absolute inset-0 z-[2] bg-gradient-to-b from-[#050505]/60 via-transparent to-[#050505]"></div>
