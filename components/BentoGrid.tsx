@@ -1,64 +1,95 @@
 
 import React from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const BentoGrid: React.FC = () => {
+  const { t } = useLanguage();
+
   return (
     <div className="max-w-7xl mx-auto px-6 py-40 reveal">
-      <div className="flex flex-col md:flex-row justify-between items-end mb-24 gap-8">
+      <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
         <div className="max-w-2xl">
-          <h2 className="text-4xl md:text-6xl font-display font-bold mb-6 tracking-tight">O que nos torna <br /> <span className="text-slate-500">referência no mercado.</span></h2>
-          <p className="text-slate-400 text-lg font-light leading-relaxed">Combinamos estética atemporal com performance técnica para garantir que sua empresa se destaque em um mar de mediocridade.</p>
+          <h2 className="text-4xl md:text-6xl font-display font-bold mb-6 tracking-tight text-white">
+            {t('bento_title')} <br /> 
+            <span className="text-zinc-500">{t('bento_title_span')}</span>
+          </h2>
+          <p className="text-zinc-400 text-lg font-light leading-relaxed">
+            {t('bento_desc')}
+          </p>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-[280px]">
-        {/* Item 1 - Grande */}
-        <div className="md:col-span-2 md:row-span-2 bento-item rounded-[2.5rem] p-10 flex flex-col justify-between overflow-hidden relative group">
-          <div className="relative z-10">
-            <span className="text-indigo-400 font-bold text-xs uppercase tracking-widest mb-4 block">Performance</span>
-            <h3 className="text-3xl md:text-4xl font-display font-bold mb-4 leading-tight">Velocidade que <br />gera receita.</h3>
-            <p className="text-slate-400 text-base max-w-[280px] leading-relaxed">Reduzimos o tempo de carregamento para aumentar sua taxa de conversão em até 40%.</p>
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 md:auto-rows-[320px]">
+        
+        {/* Card 1: Stack Tecnológico */}
+        <div className="md:col-span-2 md:row-span-1 rounded-[2.5rem] bg-zinc-900/40 border border-white/5 p-8 relative overflow-hidden group hover:border-white/10 transition-all duration-500">
+          <div className="relative z-20 h-full flex flex-col justify-between">
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></div>
+                <span className="text-xs font-bold uppercase tracking-widest text-indigo-400">Next.js & React</span>
+              </div>
+              <h3 className="text-3xl font-display font-bold text-white mb-2">{t('bento_card1_title')}</h3>
+              <p className="text-zinc-500 text-sm max-w-xs">{t('bento_card1_desc')}</p>
+            </div>
           </div>
-          <div className="relative z-10 flex items-center gap-4">
-             <div className="w-16 h-16 rounded-full border border-white/10 flex items-center justify-center glass">
-                <span className="text-2xl font-bold">A+</span>
-             </div>
-             <span className="text-xs font-semibold text-slate-500 uppercase tracking-widest">PageSpeed Score</span>
+
+          {/* Abstract Code Visual */}
+          <div className="absolute top-8 right-8 w-[280px] bg-[#0F0F11] rounded-xl border border-white/5 p-4 shadow-2xl transform rotate-3 group-hover:rotate-0 group-hover:scale-105 transition-all duration-500 opacity-80 md:opacity-100">
+            <div className="flex gap-1.5 mb-3">
+              <div className="w-2.5 h-2.5 rounded-full bg-red-500/20"></div>
+              <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/20"></div>
+              <div className="w-2.5 h-2.5 rounded-full bg-green-500/20"></div>
+            </div>
+            <div className="space-y-2">
+              <div className="h-2 w-3/4 bg-indigo-500/20 rounded"></div>
+              <div className="h-2 w-1/2 bg-zinc-700/20 rounded pl-4"></div>
+              <div className="h-2 w-2/3 bg-purple-500/20 rounded pl-4"></div>
+              <div className="h-2 w-full bg-zinc-700/20 rounded"></div>
+            </div>
           </div>
-          {/* Sutil background decor */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/5 blur-[80px] rounded-full -mr-20 -mt-20"></div>
+          
+          {/* Background Glow */}
+          <div className="absolute bottom-0 right-0 w-64 h-64 bg-indigo-600/10 blur-[80px] rounded-full pointer-events-none"></div>
         </div>
 
-        {/* Item 2 - Vertical */}
-        <div className="md:col-span-1 md:row-span-2 bento-item rounded-[2.5rem] p-10 flex flex-col justify-between group">
-          <div className="w-14 h-14 glass rounded-2xl flex items-center justify-center text-white border-white/10 group-hover:bg-white group-hover:text-black transition-all duration-500">
-             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+        {/* Card 2: Mobile First */}
+        <div className="md:col-span-1 md:row-span-1 rounded-[2.5rem] bg-zinc-900/40 border border-white/5 p-8 relative overflow-hidden group hover:border-white/10 transition-all duration-500 flex flex-col justify-between">
+          <div className="relative z-20">
+            <h3 className="text-xl font-display font-bold text-white mb-2">{t('bento_card2_title')}</h3>
+            <p className="text-zinc-500 text-xs">{t('bento_card2_desc')}</p>
           </div>
-          <div>
-            <h3 className="text-2xl font-display font-bold mb-4">Suporte <br />Estratégico</h3>
-            <p className="text-slate-500 text-sm leading-relaxed">Monitoramento proativo e atualizações constantes para que você foque no que importa: seu negócio.</p>
+          
+          {/* Phone Mockup */}
+          <div className="absolute bottom-[-20px] right-[-20px] w-32 h-48 bg-[#0F0F11] border-[4px] border-zinc-800 rounded-[1.5rem] transform group-hover:-translate-y-4 group-hover:-translate-x-4 transition-transform duration-500 shadow-2xl">
+            <div className="w-full h-full bg-zinc-900 rounded-[1.2rem] overflow-hidden p-2">
+              <div className="w-full h-1/2 bg-zinc-800/50 rounded-lg mb-2"></div>
+              <div className="flex gap-2">
+                <div className="w-1/2 h-16 bg-zinc-800/30 rounded-lg"></div>
+                <div className="w-1/2 h-16 bg-zinc-800/30 rounded-lg"></div>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Item 3 - Entrega em 48h (Substituindo SEO e UX) */}
-        <div className="md:col-span-1 md:row-span-2 bg-white text-black rounded-[2.5rem] p-8 flex flex-col justify-between group hover:bg-slate-100 transition-colors relative overflow-hidden">
-           <div className="absolute top-[-20%] right-[-20%] w-40 h-40 bg-indigo-500/20 blur-[50px] rounded-full"></div>
-           
-           <div>
-             <div className="w-14 h-14 bg-zinc-100 rounded-2xl flex items-center justify-center mb-6 text-indigo-600 group-hover:scale-110 transition-transform duration-300">
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-             </div>
-             <h3 className="text-3xl font-display font-bold leading-[1.1] mb-4">Entrega em <br/>até 48h</h3>
-             <p className="text-zinc-600 text-sm leading-relaxed font-medium">
-               Agilidade extrema para quem não tem tempo a perder. Do briefing ao lançamento em tempo recorde.
-             </p>
-           </div>
-           
-           <div className="flex items-center gap-2">
-             <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-             <span className="text-xs font-bold uppercase tracking-widest text-zinc-400">Disponível Agora</span>
-           </div>
+        {/* Card 3: SEO & Analytics */}
+        <div className="md:col-span-1 md:row-span-1 rounded-[2.5rem] bg-gradient-to-b from-zinc-800/40 to-black border border-white/5 p-8 relative overflow-hidden group hover:border-white/10 transition-all duration-500">
+          <div className="absolute top-0 right-0 p-8 opacity-20 group-hover:opacity-40 transition-opacity">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+          </div>
+          
+          <div className="mt-auto h-full flex flex-col justify-end relative z-10">
+            <div className="mb-4 flex items-end gap-1 h-12">
+              <div className="w-2 bg-zinc-700 h-4 rounded-t-sm group-hover:h-6 transition-all duration-300"></div>
+              <div className="w-2 bg-zinc-700 h-6 rounded-t-sm group-hover:h-10 transition-all duration-500 delay-75"></div>
+              <div className="w-2 bg-zinc-600 h-8 rounded-t-sm group-hover:h-8 transition-all duration-300 delay-100"></div>
+              <div className="w-2 bg-white h-10 rounded-t-sm group-hover:h-12 transition-all duration-500 delay-150 shadow-[0_0_10px_rgba(255,255,255,0.5)]"></div>
+            </div>
+            <h3 className="text-xl font-display font-bold text-white mb-2">{t('bento_card3_title')}</h3>
+            <p className="text-zinc-500 text-xs">{t('bento_card3_desc')}</p>
+          </div>
         </div>
+
       </div>
     </div>
   );

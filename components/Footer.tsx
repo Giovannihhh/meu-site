@@ -1,7 +1,10 @@
 
 import React from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const Footer: React.FC = () => {
+  const { t } = useLanguage();
+
   return (
     <footer className="py-20 border-t border-white/5">
       <div className="max-w-7xl mx-auto px-6">
@@ -15,10 +18,10 @@ const Footer: React.FC = () => {
         </div>
         
         <div className="flex flex-col md:flex-row justify-between items-center text-zinc-600 text-[10px] md:text-xs uppercase tracking-[0.2em] font-medium border-t border-white/5 pt-12">
-          <p>© Copyright 2026 43V3R. Todos os direitos reservados.</p>
+          <p>{t('footer_rights')}</p>
           <div className="flex gap-8 mt-6 md:mt-0">
-            <a href="#">Privacidade</a>
-            <a href="#">Termos</a>
+            <a href="#">{t('footer_privacy')}</a>
+            <a href="#">{t('footer_terms')}</a>
           </div>
         </div>
       </div>

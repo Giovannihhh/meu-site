@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 declare const gsap: any;
 
@@ -8,6 +9,7 @@ interface CustomizationWizardProps {
 }
 
 const CustomizationWizard: React.FC<CustomizationWizardProps> = ({ onBack }) => {
+  const { t } = useLanguage();
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     type: '',
@@ -39,42 +41,42 @@ const CustomizationWizard: React.FC<CustomizationWizardProps> = ({ onBack }) => 
 
   const finishWizard = () => {
     // Formata a mensagem para o WhatsApp
-    const message = `Olá, gostaria de iniciar um projeto com a 43V3R.%0A%0A*Resumo do Briefing:*%0A- *Tipo:* ${formData.type}%0A- *Estilo:* ${formData.style}%0A- *Investimento:* ${formData.budget}%0A- *Nome:* ${formData.name}`;
+    const message = `${t('wiz_msg_intro')}%0A%0A*Briefing:*%0A- *Type:* ${formData.type}%0A- *Style:* ${formData.style}%0A- *Budget:* ${formData.budget}%0A- *Name:* ${formData.name}`;
     window.open(`https://wa.me/5512982025191?text=${message}`, '_blank');
   };
 
   const steps = [
     {
       id: 1,
-      question: "Qual o objetivo do seu projeto?",
+      question: t('wiz_step1_q'),
       field: "type",
       options: [
-        { label: "Landing Page", desc: "Foco em conversão e vendas rápidas." },
-        { label: "Institucional", desc: "Apresentar sua empresa e serviços." },
-        { label: "E-commerce", desc: "Venda de produtos online." },
-        { label: "Sistema Web", desc: "Funcionalidades complexas sob medida." }
+        { label: t('wiz_opt_landing'), desc: t('wiz_opt_landing_desc') },
+        { label: t('wiz_opt_inst'), desc: t('wiz_opt_inst_desc') },
+        { label: t('wiz_opt_ecom'), desc: t('wiz_opt_ecom_desc') },
+        { label: t('wiz_opt_sys'), desc: t('wiz_opt_sys_desc') }
       ]
     },
     {
       id: 2,
-      question: "Qual estilo visual mais te agrada?",
+      question: t('wiz_step2_q'),
       field: "style",
       options: [
-        { label: "Minimalista", desc: "Limpo, muito espaço em branco, tipografia forte." },
-        { label: "Luxo / Premium", desc: "Tons escuros, dourado, sofisticado." },
-        { label: "Tech / Moderno", desc: "Neons, grids, futurista." },
-        { label: "Corporativo", desc: "Sóbrio, azul marinho, confiável." }
+        { label: t('wiz_style_min'), desc: t('wiz_style_min_desc') },
+        { label: t('wiz_style_lux'), desc: t('wiz_style_lux_desc') },
+        { label: t('wiz_style_mod'), desc: t('wiz_style_mod_desc') },
+        { label: t('wiz_style_corp'), desc: t('wiz_style_corp_desc') }
       ]
     },
     {
       id: 3,
-      question: "Qual sua estimativa de investimento?",
+      question: t('wiz_step3_q'),
       field: "budget",
       options: [
-        { label: "Até R$ 2.000", desc: "Projetos iniciais e landing pages." },
-        { label: "R$ 2.000 - R$ 5.000", desc: "Sites completos e personalizados." },
-        { label: "R$ 5.000 - R$ 10.000", desc: "E-commerces e alta complexidade." },
-        { label: "Acima de R$ 10.000", desc: "Ecossistemas digitais robustos." }
+        { label: t('wiz_budget_1'), desc: t('wiz_budget_1_desc') },
+        { label: t('wiz_budget_2'), desc: t('wiz_budget_2_desc') },
+        { label: t('wiz_budget_3'), desc: t('wiz_budget_3_desc') },
+        { label: t('wiz_budget_4'), desc: t('wiz_budget_4_desc') }
       ]
     }
   ];
@@ -92,7 +94,7 @@ const CustomizationWizard: React.FC<CustomizationWizardProps> = ({ onBack }) => 
       {/* Header */}
       <div className="relative z-20 w-full max-w-4xl mx-auto px-6 py-8 flex justify-between items-center">
         <button onClick={onBack} className="text-zinc-400 hover:text-white transition-colors flex items-center gap-2 text-sm font-bold uppercase tracking-widest">
-          &larr; Cancelar
+          &larr; {t('wiz_cancel')}
         </button>
         <div className="flex gap-2">
           {[1, 2, 3, 4].map(i => (
@@ -115,6 +117,7 @@ const CustomizationWizard: React.FC<CustomizationWizardProps> = ({ onBack }) => 
                 {currentStepData?.options.map((opt, idx) => (
                   <button
                     key={idx}
+                    // @ts-ignore
                     onClick={() => handleSelection(currentStepData.field, opt.label)}
                     className={`wizard-card text-left p-8 rounded-3xl border transition-all duration-300 group relative overflow-hidden ${
                       // @ts-ignore
@@ -148,18 +151,18 @@ const CustomizationWizard: React.FC<CustomizationWizardProps> = ({ onBack }) => 
             // Final Step - Contact Info
             <div className="max-w-xl mx-auto w-full">
                <h2 className="text-3xl md:text-5xl font-display font-bold text-center mb-6 wizard-card">
-                Quase lá!
+                {t('wiz_step4_q')}
               </h2>
-              <p className="text-zinc-400 text-center mb-12 wizard-card">Para finalizarmos, como prefere ser chamado?</p>
+              <p className="text-zinc-400 text-center mb-12 wizard-card">{t('wiz_step4_desc')}</p>
               
               <div className="wizard-card space-y-6">
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-widest text-zinc-500 mb-3">Seu Nome</label>
+                  <label className="block text-xs font-bold uppercase tracking-widest text-zinc-500 mb-3">{t('wiz_name_label')}</label>
                   <input 
                     type="text" 
                     value={formData.name}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
-                    placeholder="Digite seu nome"
+                    placeholder={t('wiz_name_place')}
                     className="w-full bg-zinc-900/50 border border-white/10 rounded-2xl p-5 text-white focus:outline-none focus:border-indigo-500 transition-colors"
                   />
                 </div>
@@ -176,7 +179,7 @@ const CustomizationWizard: React.FC<CustomizationWizardProps> = ({ onBack }) => 
                  step === 1 ? 'opacity-0 pointer-events-none' : 'text-zinc-500 hover:text-white bg-white/5 hover:bg-white/10'
                }`}
              >
-               Voltar
+               {t('wiz_back')}
              </button>
 
              <button 
@@ -184,7 +187,7 @@ const CustomizationWizard: React.FC<CustomizationWizardProps> = ({ onBack }) => 
                disabled={step < 4 && !formData[currentStepData!.field as keyof typeof formData]}
                className={`bg-white text-black px-10 py-4 rounded-full font-bold text-sm tracking-widest uppercase hover:scale-105 transition-all shadow-xl shadow-white/10 disabled:opacity-50 disabled:scale-100 disabled:cursor-not-allowed`}
              >
-               {step === 4 ? 'Finalizar via WhatsApp' : 'Continuar'}
+               {step === 4 ? t('wiz_finish') : t('wiz_next')}
              </button>
           </div>
 

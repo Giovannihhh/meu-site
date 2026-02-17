@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import { Project } from '../App';
+import { useLanguage } from '../contexts/LanguageContext';
 
 declare const gsap: any;
 declare const ScrollTrigger: any;
@@ -11,7 +12,9 @@ interface PortfolioGalleryProps {
 }
 
 const PortfolioGallery: React.FC<PortfolioGalleryProps> = ({ onProjectClick, onBack }) => {
-  const [imagesLoaded, setImagesLoaded] = useState<Record<number, boolean>>({});
+  const { t } = useLanguage();
+  const [imagesLoaded, setImagesLoaded] = useState<Record<string, boolean>>({});
+  const [selectedCategory, setSelectedCategory] = useState(t('gallery_all'));
   const containerRef = useRef<HTMLDivElement>(null);
 
   const allProjects: Project[] = [
@@ -19,39 +22,61 @@ const PortfolioGallery: React.FC<PortfolioGalleryProps> = ({ onProjectClick, onB
       title: "Lumina Studio", 
       category: "Arquitetura", 
       img: "https://images.unsplash.com/photo-1600607687940-4e7a53157a41?q=80&w=2070&auto=format&fit=crop",
-      description: "Uma plataforma imersiva para um dos maiores escritórios de arquitetura de luxo do país."
+      description: t('proj_lumina_desc')
     },
     { 
       title: "Apex Finanças", 
       category: "Fintech", 
       img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2026&auto=format&fit=crop",
-      description: "Interface bancária de alta complexidade redesenhada para oferecer simplicidade e segurança."
+      description: t('proj_apex_desc')
     },
     { 
       title: "Natura Skin", 
       category: "Cosméticos", 
       img: "https://images.unsplash.com/photo-1556228720-195a672e8a03?q=80&w=2070&auto=format&fit=crop",
-      description: "E-commerce premium com experiência de compra baseada em personalização."
+      description: t('proj_natura_desc')
     },
     { 
       title: "Vanguard Realty", 
       category: "Imobiliária", 
       img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2070&auto=format&fit=crop",
-      description: "Portal imobiliário de luxo focado em propriedades exclusivas e atendimento personalizado."
+      description: t('proj_vanguard_desc')
     },
     { 
       title: "Echo Audio", 
       category: "Tecnologia", 
       img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=2070&auto=format&fit=crop",
-      description: "Landing page para lançamento de hardware de áudio premium com som surround 360."
+      description: t('proj_echo_desc')
     },
     { 
-      title: "Savor Cuisine", 
+      title: "Ateliê dos Sabores", 
       category: "Gastronomia", 
-      img: "https://images.unsplash.com/photo-1550966841-3ee4ad00a0d6?q=80&w=2070&auto=format&fit=crop",
-      description: "Experiência digital para restaurante estrelado Michelin, com reservas integradas."
+      img: "https://images.unsplash.com/photo-1626803775151-61d756612fcd?q=80&w=2070&auto=format&fit=crop",
+      description: t('proj_atelie_desc'),
+      previewUrl: "https://htmlpreview.github.io/?https://github.com/Giovannihhh/ateliedossabores/blob/main/index.html",
+      repoUrl: "https://github.com/Giovannihhh/ateliedossabores"
     }
   ];
+
+  // Extrair categorias únicas e adicionar "Todas" ou "All" dependendo do idioma
+  const allLabel = t('gallery_all');
+  const categories = [allLabel, ...Array.from(new Set(allProjects.map(p => p.category)))];
+
+  // Se o idioma mudar e a categoria selecionada não for encontrada (ex: 'Todas' vs 'All'), reseta
+  useEffect(() => {
+    if (!categories.includes(selectedCategory) && selectedCategory !== allLabel) {
+       setSelectedCategory(allLabel);
+    } else if (selectedCategory === 'Todas' && allLabel === 'All') {
+       setSelectedCategory('All');
+    } else if (selectedCategory === 'All' && allLabel === 'Todas') {
+       setSelectedCategory('Todas');
+    }
+  }, [allLabel]);
+
+
+  const filteredProjects = selectedCategory === allLabel
+    ? allProjects
+    : allProjects.filter(p => p.category === selectedCategory);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -88,8 +113,8 @@ const PortfolioGallery: React.FC<PortfolioGalleryProps> = ({ onProjectClick, onB
     return () => ctx.revert();
   }, []);
 
-  const handleImageLoad = (index: number) => {
-    setImagesLoaded(prev => ({ ...prev, [index]: true }));
+  const handleImageLoad = (id: string) => {
+    setImagesLoaded(prev => ({ ...prev, [id]: true }));
   };
 
   return (
@@ -101,77 +126,100 @@ const PortfolioGallery: React.FC<PortfolioGalleryProps> = ({ onProjectClick, onB
             onClick={onBack}
             className="glass px-6 py-2 rounded-full flex items-center gap-3 text-sm font-bold hover:bg-white hover:text-black transition-all group"
           >
-            <span className="group-hover:-translate-x-1 transition-transform">&larr;</span> Voltar ao Início
+            <span className="group-hover:-translate-x-1 transition-transform">&larr;</span> {t('gallery_back')}
           </button>
-          <div className="flex items-center gap-3">
-            <img 
-              src="logo.png" 
-              alt="43V3R Logo" 
-              className="h-10 w-auto object-contain"
-            />
-          </div>
+          {/* Logo removed */}
         </div>
       </nav>
 
       {/* Hero Header */}
-      <header className="pt-48 pb-24 text-center px-6">
-        <h1 className="text-6xl md:text-8xl font-display font-bold tracking-tighter mb-6 gallery-reveal">Galeria de <span className="text-zinc-600">Projetos</span></h1>
-        <p className="text-zinc-400 max-w-2xl mx-auto text-lg md:text-xl gallery-reveal">
-          Uma curadoria de nossas soluções digitais mais impactantes para empresas que buscam o extraordinário.
+      <header className="pt-48 pb-10 text-center px-6">
+        <h1 className="text-6xl md:text-8xl font-display font-bold tracking-tighter mb-6 gallery-reveal">{t('gallery_title')} <span className="text-zinc-600">{t('gallery_title_highlight')}</span></h1>
+        <p className="text-zinc-400 max-w-2xl mx-auto text-lg md:text-xl gallery-reveal mb-12">
+          {t('gallery_desc')}
         </p>
+        
+        {/* Category Filters */}
+        <div className="flex flex-wrap justify-center gap-3 md:gap-4 mb-8 gallery-reveal max-w-4xl mx-auto">
+            {categories.map((cat) => (
+                <button
+                    key={cat}
+                    onClick={() => setSelectedCategory(cat)}
+                    className={`px-6 py-2.5 rounded-full text-xs md:text-sm font-bold uppercase tracking-widest transition-all duration-300 border ${
+                        selectedCategory === cat
+                            ? 'bg-white text-black border-white shadow-[0_0_20px_rgba(255,255,255,0.2)] transform scale-105'
+                            : 'bg-zinc-900/50 text-zinc-500 border-white/5 hover:border-white/20 hover:text-white hover:bg-zinc-800'
+                    }`}
+                >
+                    {cat}
+                </button>
+            ))}
+        </div>
       </header>
 
       {/* Grid */}
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {allProjects.map((p, i) => (
-          <div 
-            key={i} 
-            className="group cursor-pointer gallery-reveal"
-            onClick={() => onProjectClick(p)}
-          >
-            <div className="aspect-square overflow-hidden rounded-[2.5rem] mb-6 relative border border-white/5 bg-[#0a0a0a]">
-              
-              {/* Parallax Wrapper */}
-              <div className="gallery-parallax-wrapper absolute inset-0 w-full h-[130%] -top-[15%]">
-                <img 
-                  src={p.img} 
-                  alt={p.title} 
-                  onLoad={() => handleImageLoad(i)}
-                  className={`w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ${imagesLoaded[i] ? 'opacity-60 group-hover:opacity-100' : 'opacity-0'}`}
-                />
-              </div>
-
-              {/* Shimmer Placeholder */}
-              {!imagesLoaded[i] && (
-                <div className="absolute inset-0 z-10 shimmer rounded-[2.5rem]" />
-              )}
-              
-              {/* Overlay Gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity pointer-events-none"></div>
-              
-              {/* Content */}
-              <div className={`absolute bottom-8 left-8 right-8 transition-opacity duration-500 z-20 ${imagesLoaded[i] ? 'opacity-100' : 'opacity-0'}`}>
-                <span className="text-[10px] uppercase font-bold tracking-[0.3em] text-white/50 mb-2 block">{p.category}</span>
-                <h3 className="text-3xl font-display font-bold group-hover:translate-x-2 transition-transform mb-4">{p.title}</h3>
+        {filteredProjects.length > 0 ? (
+          filteredProjects.map((p, i) => (
+            <div 
+              key={p.title} 
+              className="group cursor-pointer gallery-reveal"
+              onClick={() => onProjectClick(p)}
+            >
+              <div className="aspect-square overflow-hidden rounded-[2.5rem] mb-6 relative border border-white/5 bg-[#0a0a0a]">
                 
-                {/* Saiba Mais Button */}
-                <div className="flex items-center gap-2">
-                   <span className="inline-flex items-center justify-center px-5 py-2 rounded-full border border-white/20 bg-white/5 backdrop-blur-md text-[10px] font-bold uppercase tracking-widest text-white group-hover:bg-white group-hover:text-black transition-all duration-300 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100">
-                     Saiba mais
-                   </span>
+                {/* Parallax Wrapper */}
+                <div className="gallery-parallax-wrapper absolute inset-0 w-full h-[130%] -top-[15%]">
+                  <img 
+                    src={p.img} 
+                    alt={p.title} 
+                    onLoad={() => handleImageLoad(p.title)}
+                    className={`w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ${imagesLoaded[p.title] ? 'opacity-60 group-hover:opacity-100' : 'opacity-0'}`}
+                  />
                 </div>
-              </div>
 
-              {/* Skeleton text for title when loading */}
-              {!imagesLoaded[i] && (
-                <div className="absolute bottom-8 left-8 right-8 z-20">
-                    <div className="w-1/3 h-2 shimmer rounded-full mb-3" />
-                    <div className="w-2/3 h-6 shimmer rounded-lg" />
+                {/* Shimmer Placeholder */}
+                {!imagesLoaded[p.title] && (
+                  <div className="absolute inset-0 z-10 shimmer rounded-[2.5rem]" />
+                )}
+                
+                {/* Overlay Gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity pointer-events-none"></div>
+                
+                {/* Content */}
+                <div className={`absolute bottom-8 left-8 right-8 transition-opacity duration-500 z-20 ${imagesLoaded[p.title] ? 'opacity-100' : 'opacity-0'}`}>
+                  <span className="text-[10px] uppercase font-bold tracking-[0.3em] text-white/50 mb-2 block">{p.category}</span>
+                  <h3 className="text-3xl font-display font-bold group-hover:translate-x-2 transition-transform mb-4">{p.title}</h3>
+                  
+                  {/* Saiba Mais Button */}
+                  <div className="flex items-center gap-2">
+                    <span className="inline-flex items-center justify-center px-5 py-2 rounded-full border border-white/20 bg-white/5 backdrop-blur-md text-[10px] font-bold uppercase tracking-widest text-white group-hover:bg-white group-hover:text-black transition-all duration-300 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100">
+                      {t('gallery_details')}
+                    </span>
+                  </div>
                 </div>
-              )}
+
+                {/* Skeleton text for title when loading */}
+                {!imagesLoaded[p.title] && (
+                  <div className="absolute bottom-8 left-8 right-8 z-20">
+                      <div className="w-1/3 h-2 shimmer rounded-full mb-3" />
+                      <div className="w-2/3 h-6 shimmer rounded-lg" />
+                  </div>
+                )}
+              </div>
             </div>
+          ))
+        ) : (
+          <div className="col-span-full py-20 text-center gallery-reveal">
+            <p className="text-zinc-500 text-lg">{t('gallery_empty')}</p>
+            <button 
+              onClick={() => setSelectedCategory(allLabel)}
+              className="mt-4 text-indigo-400 hover:text-indigo-300 text-sm font-bold uppercase tracking-widest"
+            >
+              {t('gallery_view_all')}
+            </button>
           </div>
-        ))}
+        )}
       </div>
     </div>
   );

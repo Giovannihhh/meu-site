@@ -1,32 +1,39 @@
 
 import React from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
 
-const Services: React.FC = () => {
+interface ServicesProps {
+  onLearnMore?: () => void;
+}
+
+const Services: React.FC<ServicesProps> = ({ onLearnMore }) => {
+  const { t } = useLanguage();
+
   const services = [
     { 
-      title: "Landing Pages de Alta Conversão", 
-      desc: "Estruturas otimizadas para transformar tráfego em vendas de forma eficiente.",
+      title: t('s_landing_title'), 
+      desc: t('s_landing_desc'),
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
       )
     },
     { 
-      title: "E-commerce & Plataformas", 
-      desc: "Lojas virtuais robustas com foco na experiência do usuário e checkout simplificado.",
+      title: t('s_ecom_title'), 
+      desc: t('s_ecom_desc'),
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
       )
     },
     { 
-      title: "Desenvolvimento Sob Medida", 
-      desc: "Aplicações escaláveis criadas para resolver problemas específicos do seu fluxo de trabalho.",
+      title: t('s_dev_title'), 
+      desc: t('s_dev_desc'),
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
       )
     },
     { 
-      title: "Brand Identity Digital", 
-      desc: "Design visual coerente que transmite a autoridade e os valores da sua marca.",
+      title: t('s_brand_title'), 
+      desc: t('s_brand_desc'),
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/><path d="M12 6v6l4 2"/></svg>
       )
@@ -41,20 +48,24 @@ const Services: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="mb-24 md:flex justify-between items-end">
           <div className="max-w-2xl">
-            <span className="text-indigo-400 font-bold text-xs uppercase tracking-[0.2em] mb-4 block">Nossas Competências</span>
+            <span className="text-indigo-400 font-bold text-xs uppercase tracking-[0.2em] mb-4 block">{t('home_serv_eyebrow')}</span>
             <h2 className="text-4xl md:text-6xl font-display font-bold leading-[1.1] tracking-tight text-white">
-              Soluções digitais <br />
-              <span className="text-zinc-600">para o futuro.</span>
+              {t('home_serv_title')} <br />
+              <span className="text-zinc-600">{t('home_serv_title_span')}</span>
             </h2>
           </div>
           <p className="text-zinc-400 text-lg font-light max-w-md mt-6 md:mt-0 leading-relaxed md:text-right">
-            Da concepção à execução, entregamos produtos digitais que definem categorias e elevam padrões de mercado.
+            {t('home_serv_desc')}
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {services.map((s, i) => (
-            <div key={i} className="group relative p-[1px] rounded-[2rem] bg-gradient-to-b from-white/10 to-transparent hover:from-indigo-500/50 hover:to-purple-500/50 transition-all duration-500">
+            <div 
+              key={i} 
+              onClick={onLearnMore}
+              className="group relative p-[1px] rounded-[2rem] bg-gradient-to-b from-white/10 to-transparent hover:from-indigo-500/50 hover:to-purple-500/50 transition-all duration-500 cursor-pointer"
+            >
                <div className="relative bg-[#0A0A0B] h-full rounded-[2rem] p-10 flex flex-col items-start overflow-hidden">
                   
                   {/* Hover Glow Effect inside card */}
@@ -68,7 +79,7 @@ const Services: React.FC = () => {
                   <p className="text-zinc-500 leading-relaxed font-light mb-8 group-hover:text-zinc-400 transition-colors relative z-10">{s.desc}</p>
                   
                   <div className="mt-auto flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-600 group-hover:text-indigo-400 transition-colors relative z-10">
-                    <span>Detalhes</span>
+                    <span>{t('home_serv_btn')}</span>
                     <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                   </div>
                </div>

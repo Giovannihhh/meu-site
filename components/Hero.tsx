@@ -1,5 +1,6 @@
 
 import React, { useEffect, useRef, useState } from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 declare const gsap: any;
 declare const ScrollTrigger: any;
@@ -10,6 +11,7 @@ interface HeroProps {
 }
 
 const Hero: React.FC<HeroProps> = ({ onNavigatePortfolio, onStartProject }) => {
+  const { t } = useLanguage();
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subRef = useRef<HTMLParagraphElement>(null);
@@ -19,28 +21,16 @@ const Hero: React.FC<HeroProps> = ({ onNavigatePortfolio, onStartProject }) => {
 
   // Estado para o efeito de digitação
   const [displayedText, setDisplayedText] = useState("");
-  const fullText = "Entregamos autoridade através de sites luxuosos e tecnicamente superiores. Projetados para converter e expandir seu alcance global.";
+  // Obtém o texto completo das traduções
+  const fullText = t('hero_subtitle');
 
+  // Reiniciar efeito de digitação quando o idioma mudar
   useEffect(() => {
-    // Content Animations
-    const tl = gsap.timeline();
+    setDisplayedText(""); // Limpa o texto imediatamente
+    let index = 0;
     
-    tl.fromTo(titleRef.current, 
-      { y: 60, opacity: 0 }, 
-      { y: 0, opacity: 1, duration: 1.2, ease: "expo.out", delay: 0.3 }
-    )
-    .fromTo(subRef.current, 
-      { y: 30, opacity: 0 }, 
-      { y: 0, opacity: 1, duration: 1, ease: "expo.out" }, "-=0.8"
-    )
-    .fromTo(ctaRef.current, 
-      { y: 20, opacity: 0 }, 
-      { y: 0, opacity: 1, duration: 0.8, ease: "expo.out" }, "-=0.6"
-    );
-
-    // Lógica do efeito de escrita (Typewriter)
+    // Pequeno delay para começar a digitar após a troca de idioma
     const startTyping = setTimeout(() => {
-      let index = 0;
       const typeInterval = setInterval(() => {
         if (index <= fullText.length) {
           setDisplayedText(fullText.slice(0, index));
@@ -51,7 +41,28 @@ const Hero: React.FC<HeroProps> = ({ onNavigatePortfolio, onStartProject }) => {
       }, 30); // Velocidade da digitação (ms)
 
       return () => clearInterval(typeInterval);
-    }, 1000); // Aguarda a animação inicial do título
+    }, 100);
+
+    return () => clearTimeout(startTyping);
+  }, [fullText]);
+
+  useEffect(() => {
+    // Content Animations
+    const tl = gsap.timeline();
+    
+    // Animate Main Heading with Fade In & Slide Up
+    tl.fromTo(titleRef.current, 
+      { y: 100, opacity: 0 }, 
+      { y: 0, opacity: 1, duration: 1.5, ease: "power4.out", delay: 0.2 }
+    )
+    .fromTo(subRef.current, 
+      { y: 40, opacity: 0 }, 
+      { y: 0, opacity: 1, duration: 1.2, ease: "power3.out" }, "-=1.0"
+    )
+    .fromTo(ctaRef.current, 
+      { y: 30, opacity: 0 }, 
+      { y: 0, opacity: 1, duration: 1, ease: "power3.out" }, "-=0.8"
+    );
 
     // Parallax Scroll Effect for Video
     if (videoRef.current) {
@@ -82,8 +93,6 @@ const Hero: React.FC<HeroProps> = ({ onNavigatePortfolio, onStartProject }) => {
       };
       playVideo();
     }
-
-    return () => clearTimeout(startTyping);
   }, []);
 
   return (
@@ -125,20 +134,13 @@ const Hero: React.FC<HeroProps> = ({ onNavigatePortfolio, onStartProject }) => {
 
       {/* Main Content */}
       <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
-        {/* Animated Badge */}
-        <div className="inline-flex items-center gap-2 glass px-4 py-2 rounded-full mb-10 border-white/10 shadow-2xl bg-white/5 animate-float">
-          <span className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>
-          <span className="text-[10px] md:text-[11px] font-bold tracking-[0.25em] uppercase text-zinc-300">
-            Design de Elite para SMBs
-          </span>
-        </div>
         
         <h1 
           ref={titleRef} 
           className="text-5xl md:text-8xl font-display font-bold tracking-tighter leading-[1.05] mb-8 text-white drop-shadow-2xl"
         >
-          Sua presença digital <br /> 
-          <span className="font-serif italic text-indigo-200 font-light">redefinida</span> em 2026.
+          {t('hero_title_1')} <br /> 
+          <span className="font-serif italic text-indigo-200 font-light">{t('hero_title_2')}</span> em 2026.
         </h1>
         
         <p 
@@ -154,7 +156,7 @@ const Hero: React.FC<HeroProps> = ({ onNavigatePortfolio, onStartProject }) => {
             onClick={onStartProject}
             className="group relative overflow-hidden bg-white text-black px-12 py-5 rounded-full font-bold text-base hover:scale-105 transition-all active:scale-95 shadow-2xl shadow-white/20"
           >
-            <span className="relative z-10">Iniciar Projeto</span>
+            <span className="relative z-10">{t('hero_cta_start')}</span>
             <div className="absolute inset-0 bg-zinc-200 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
           </button>
           
@@ -162,7 +164,7 @@ const Hero: React.FC<HeroProps> = ({ onNavigatePortfolio, onStartProject }) => {
             onClick={onNavigatePortfolio}
             className="glass text-white px-12 py-5 rounded-full font-semibold text-base hover:bg-white/10 transition-all border-white/20 bg-white/5 active:scale-95"
           >
-            Portfólio
+            {t('hero_cta_portfolio')}
           </button>
         </div>
       </div>
@@ -171,7 +173,7 @@ const Hero: React.FC<HeroProps> = ({ onNavigatePortfolio, onStartProject }) => {
       <div className="absolute bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-20 pointer-events-none opacity-60">
         {/* Text Hidden on Mobile to reduce clutter */}
         <span className="hidden md:block text-[9px] font-bold tracking-[0.3em] text-zinc-400 uppercase">
-          Scroll
+          {t('hero_scroll')}
         </span>
         {/* Sleek Vertical Line with Drop Animation */}
         <div className="w-[1px] h-10 md:h-16 bg-white/10 relative overflow-hidden">
