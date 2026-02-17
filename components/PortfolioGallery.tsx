@@ -51,10 +51,9 @@ const PortfolioGallery: React.FC<PortfolioGalleryProps> = ({ onProjectClick, onB
     { 
       title: "Ateliê dos Sabores", 
       category: "Gastronomia", 
-      img: "https://images.unsplash.com/photo-1626803775151-61d756612fcd?q=80&w=2070&auto=format&fit=crop",
+      img: "https://raw.githubusercontent.com/Giovannihhh/sites/main/Screenshot%202026-02-17%20150141.png",
       description: t('proj_atelie_desc'),
-      previewUrl: "https://htmlpreview.github.io/?https://github.com/Giovannihhh/ateliedossabores/blob/main/index.html",
-      repoUrl: "https://github.com/Giovannihhh/ateliedossabores"
+      previewUrl: "https://ateliedossabores-pud4.vercel.app/"
     }
   ];
 

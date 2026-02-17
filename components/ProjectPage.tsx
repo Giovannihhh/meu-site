@@ -33,11 +33,7 @@ const ProjectPage: React.FC<ProjectPageProps> = ({ project, onBack, onStartProje
             <span className="group-hover:-translate-x-1 transition-transform">&larr;</span> {t('pp_back')}
           </button>
           <div className="flex items-center">
-            <img 
-              src="logo.png" 
-              alt="43V3R Logo" 
-              className="h-10 w-auto object-contain"
-            />
+            {/* Logo PNG removido conforme solicitado */}
           </div>
         </div>
       </nav>
