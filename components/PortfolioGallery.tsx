@@ -19,41 +19,18 @@ const PortfolioGallery: React.FC<PortfolioGalleryProps> = ({ onProjectClick, onB
 
   const allProjects: Project[] = [
     { 
-      title: "Lumina Studio", 
-      category: "Arquitetura", 
-      img: "https://images.unsplash.com/photo-1600607687940-4e7a53157a41?q=80&w=2070&auto=format&fit=crop",
-      description: t('proj_lumina_desc')
-    },
-    { 
-      title: "Apex Finanças", 
-      category: "Fintech", 
-      img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2026&auto=format&fit=crop",
-      description: t('proj_apex_desc')
-    },
-    { 
-      title: "Natura Skin", 
-      category: "Cosméticos", 
-      img: "https://images.unsplash.com/photo-1556228720-195a672e8a03?q=80&w=2070&auto=format&fit=crop",
-      description: t('proj_natura_desc')
-    },
-    { 
-      title: "Vanguard Realty", 
-      category: "Imobiliária", 
-      img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2070&auto=format&fit=crop",
-      description: t('proj_vanguard_desc')
-    },
-    { 
-      title: "Echo Audio", 
-      category: "Tecnologia", 
-      img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=2070&auto=format&fit=crop",
-      description: t('proj_echo_desc')
-    },
-    { 
       title: "Ateliê dos Sabores", 
       category: "Gastronomia", 
       img: "https://raw.githubusercontent.com/Giovannihhh/sites/main/Screenshot%202026-02-17%20150141.png",
       description: t('proj_atelie_desc'),
-      previewUrl: "https://ateliedossabores-pud4.vercel.app/"
+      previewUrl: "https://ateliedossabores.vercel.app/"
+    },
+    { 
+      title: "Pet Verse", 
+      category: "Veterinária", 
+      img: "https://raw.githubusercontent.com/Giovannihhh/sites/main/Screenshot%202026-02-17%20203556.png",
+      description: t('proj_pet_desc'),
+      previewUrl: "https://petverse-umber.vercel.app/"
     }
   ];
 
@@ -123,7 +100,7 @@ const PortfolioGallery: React.FC<PortfolioGalleryProps> = ({ onProjectClick, onB
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <button 
             onClick={onBack}
-            className="glass px-6 py-2 rounded-full flex items-center gap-3 text-sm font-bold hover:bg-white hover:text-black transition-all group"
+            className="glass px-8 py-3 rounded-full flex items-center gap-4 text-base font-bold hover:bg-white hover:text-black transition-all group border-white/20 bg-black/40 backdrop-blur-md"
           >
             <span className="group-hover:-translate-x-1 transition-transform">&larr;</span> {t('gallery_back')}
           </button>

@@ -94,6 +94,7 @@ const translations: Translations = {
     proj_echo_desc: "Landing page para lançamento de hardware de áudio premium com som surround 360.",
     proj_savor_desc: "Experiência digital para restaurante estrelado Michelin, com reservas integradas.",
     proj_atelie_desc: "Website institucional e vitrine virtual para o Ateliê dos Sabores, destacando a confeitaria artesanal com design apetitoso.",
+    proj_pet_desc: "Website institucional para clínica veterinária, transmitindo confiança, cuidado e amor pelos animais através de um design acolhedor.",
 
     // Project Page Detail
     pp_back: "Voltar para Início",
@@ -240,6 +241,7 @@ const translations: Translations = {
     proj_echo_desc: "Landing page for premium audio hardware launch with 360 surround sound.",
     proj_savor_desc: "Digital experience for Michelin-starred restaurant with integrated reservations.",
     proj_atelie_desc: "Institutional website and virtual showcase for Ateliê dos Sabores, highlighting artisanal confectionery with appetizing design.",
+    proj_pet_desc: "Institutional website for a veterinary clinic, conveying trust, care, and love for animals through a welcoming design.",
 
     // Project Page Detail
     pp_back: "Back to Home",

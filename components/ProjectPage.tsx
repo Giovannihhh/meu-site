@@ -33,7 +33,7 @@ const ProjectPage: React.FC<ProjectPageProps> = ({ project, onBack, onStartProje
             <span className="group-hover:-translate-x-1 transition-transform">&larr;</span> {t('pp_back')}
           </button>
           <div className="flex items-center">
-            {/* Logo PNG removido conforme solicitado */}
+            {/* Logo PNG removido conforme solicitado anteriormente */}
           </div>
         </div>
       </nav>
@@ -66,15 +66,6 @@ const ProjectPage: React.FC<ProjectPageProps> = ({ project, onBack, onStartProje
                      {t('pp_view_code')}
                    </a>
                  )}
-                 
-                 <a 
-                   href={project.previewUrl} 
-                   target="_blank" 
-                   rel="noopener noreferrer"
-                   className="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-full text-xs font-bold transition-all"
-                 >
-                   {t('pp_open_external')} &nearr;
-                 </a>
               </div>
            </div>
            
@@ -90,17 +81,24 @@ const ProjectPage: React.FC<ProjectPageProps> = ({ project, onBack, onStartProje
         </div>
       )}
 
-      {/* Hero */}
+      {/* Hero Section */}
       <section className="relative h-[80vh] flex items-end pb-20 overflow-hidden">
+        {/* Background Image - Opacidade reduzida para contraste */}
         <img 
           src={project.img} 
-          className="absolute inset-0 w-full h-full object-cover opacity-60 project-reveal brightness-110"
+          className="absolute inset-0 w-full h-full object-cover opacity-40 project-reveal blur-[2px] scale-105"
           alt={project.title}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/20 to-transparent"></div>
+        
+        {/* Dark Overlay Layer - Uniforme */}
+        <div className="absolute inset-0 bg-black/40"></div>
+        
+        {/* Gradient Layer - Intensificado na base */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/70 to-transparent"></div>
+        
         <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
           <div className="flex flex-col items-start gap-6">
-            <span className="inline-block glass px-4 py-1.5 rounded-full text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase text-white bg-indigo-600/20 border-indigo-500/30 project-reveal">
+            <span className="inline-block glass px-4 py-1.5 rounded-full text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase text-white bg-indigo-600/20 border-indigo-500/30 project-reveal backdrop-blur-md">
               Case Study / {project.category}
             </span>
             <h1 className="text-6xl md:text-9xl font-display font-bold tracking-tighter text-white drop-shadow-2xl project-reveal">
@@ -169,24 +167,6 @@ const ProjectPage: React.FC<ProjectPageProps> = ({ project, onBack, onStartProje
                 <p className="font-bold text-white">{t('pp_timeline_val')}</p>
               </div>
             </div>
-          </div>
-
-          {/* Project Gallery - Bento Grid Style */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 project-reveal">
-             <div className="aspect-video glass rounded-[3rem] overflow-hidden group border-white/10 bg-zinc-900/50 shadow-2xl">
-               <img 
-                src="https://images.unsplash.com/photo-1542744094-24638eff58bb?q=80&w=2071&auto=format&fit=crop" 
-                className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700 brightness-105" 
-                alt="Workspace"
-               />
-             </div>
-             <div className="aspect-video glass rounded-[3rem] overflow-hidden group border-white/10 bg-zinc-900/50 shadow-2xl">
-               <img 
-                src="https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=2070&auto=format&fit=crop" 
-                className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700 brightness-105" 
-                alt="Detail"
-               />
-             </div>
           </div>
         </div>
       </section>
