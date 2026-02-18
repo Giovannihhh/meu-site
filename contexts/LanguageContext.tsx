@@ -86,7 +86,7 @@ const translations: Translations = {
     gallery_empty: "Nenhum projeto encontrado nesta categoria.",
     gallery_view_all: "Ver todos os projetos",
     
-    // Project Data Descriptions (Generic for translations)
+    // Project Data Descriptions
     proj_lumina_desc: "Uma plataforma imersiva para um dos maiores escritórios de arquitetura de luxo do país.",
     proj_apex_desc: "Interface bancária de alta complexidade redesenhada para oferecer simplicidade e segurança.",
     proj_natura_desc: "E-commerce premium com experiência de compra baseada em personalização.",
@@ -95,6 +95,7 @@ const translations: Translations = {
     proj_savor_desc: "Experiência digital para restaurante estrelado Michelin, com reservas integradas.",
     proj_atelie_desc: "Website institucional e vitrine virtual para o Ateliê dos Sabores, destacando a confeitaria artesanal com design apetitoso.",
     proj_pet_desc: "Website institucional para clínica veterinária, transmitindo confiança, cuidado e amor pelos animais através de um design acolhedor.",
+    proj_pizzaria_desc: "Experiência digital completa para a Pizzaria da Vila, com menu interativo e design otimizado para conversão de pedidos.",
 
     // Project Page Detail
     pp_back: "Voltar para Início",
@@ -242,6 +243,7 @@ const translations: Translations = {
     proj_savor_desc: "Digital experience for Michelin-starred restaurant with integrated reservations.",
     proj_atelie_desc: "Institutional website and virtual showcase for Ateliê dos Sabores, highlighting artisanal confectionery with appetizing design.",
     proj_pet_desc: "Institutional website for a veterinary clinic, conveying trust, care, and love for animals through a welcoming design.",
+    proj_pizzaria_desc: "Complete digital experience for Pizzaria da Vila, featuring an interactive menu and design optimized for order conversion.",
 
     // Project Page Detail
     pp_back: "Back to Home",

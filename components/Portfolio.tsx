@@ -54,11 +54,18 @@ const Portfolio: React.FC<PortfolioProps> = ({ onProjectClick, onSeeAll }) => {
       previewUrl: "https://ateliedossabores.vercel.app/"
     },
     { 
-      title: "Pet Feliz", 
+      title: "Pet Verse", 
       category: "Veterinária", 
       img: "https://raw.githubusercontent.com/Giovannihhh/sites/main/Screenshot%202026-02-17%20203556.png",
       description: t('proj_pet_desc'),
-      previewUrl: "https://pet-feliz-v2-1bf7.vercel.app/"
+      previewUrl: "https://petverse-umber.vercel.app/"
+    },
+    { 
+      title: "Pizzaria da Vila", 
+      category: "Gastronomia", 
+      img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=2070&auto=format&fit=crop",
+      description: t('proj_pizzaria_desc'),
+      previewUrl: "https://pizzaria-da-vila-mb7kn006v-leogiovannilgr-5152s-projects.vercel.app/"
     }
   ];
 
@@ -75,7 +82,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ onProjectClick, onSeeAll }) => {
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
           {projects.map((p, i) => (
             <div 
               key={i} 
